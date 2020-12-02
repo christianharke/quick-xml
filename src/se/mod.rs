@@ -223,7 +223,7 @@ impl<'r, 'w, W: Write> ser::Serializer for &'w mut Serializer<'r, W> {
     }
 
     fn serialize_unit_struct(self, name: &'static str) -> Result<Self::Ok, DeError> {
-        self.write_self_closed(self.root_tag.unwrap_or(name))
+        self.write_paired(self.root_tag.unwrap_or(name))
     }
 
     fn serialize_unit_variant(
@@ -232,7 +232,7 @@ impl<'r, 'w, W: Write> ser::Serializer for &'w mut Serializer<'r, W> {
         _variant_index: u32,
         variant: &'static str,
     ) -> Result<Self::Ok, DeError> {
-        self.write_self_closed(variant)
+        self.write_paired(variant)
     }
 
     fn serialize_newtype_struct<T: ?Sized + Serialize>(
